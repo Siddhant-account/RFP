@@ -20,7 +20,7 @@ export interface RFPDocument {
   size: number;
   type: string;
   uploadedAt: Date;
-  status: 'uploading' | 'processing' | 'completed' | 'failed';
+  status: "uploading" | "processing" | "completed" | "failed";
 }
 
 /**
@@ -43,10 +43,16 @@ export interface RFPAnalysis {
  */
 export interface KeyPoint {
   id: string;
-  category: 'requirement' | 'deadline' | 'evaluation' | 'technical' | 'budget' | 'other';
+  category:
+    | "requirement"
+    | "deadline"
+    | "evaluation"
+    | "technical"
+    | "budget"
+    | "other";
   title: string;
   description: string;
-  importance: 'high' | 'medium' | 'low';
+  importance: "high" | "medium" | "low";
   pageReference?: number;
 }
 

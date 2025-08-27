@@ -1,9 +1,25 @@
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { FileText, Upload, Brain, Clock, CheckCircle2, AlertCircle, FileSearch, Target, Zap } from "lucide-react";
+import {
+  FileText,
+  Upload,
+  Brain,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+  FileSearch,
+  Target,
+  Zap,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
@@ -12,7 +28,7 @@ interface UploadedFile {
   name: string;
   size: number;
   progress: number;
-  status: 'uploading' | 'processing' | 'completed' | 'failed';
+  status: "uploading" | "processing" | "completed" | "failed";
 }
 
 export default function Index() {
@@ -33,7 +49,7 @@ export default function Index() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFiles(e.dataTransfer.files);
     }
@@ -47,68 +63,72 @@ export default function Index() {
         name: file.name,
         size: file.size,
         progress: 0,
-        status: 'uploading'
+        status: "uploading",
       };
 
-      setUploadedFiles(prev => [...prev, newFile]);
+      setUploadedFiles((prev) => [...prev, newFile]);
 
       // Simulate upload progress
       const interval = setInterval(() => {
-        setUploadedFiles(prev =>
-          prev.map(f => {
+        setUploadedFiles((prev) =>
+          prev.map((f) => {
             if (f.id === newFile.id) {
               if (f.progress < 100) {
                 return { ...f, progress: Math.min(f.progress + 10, 100) };
               } else {
-                return { ...f, status: 'processing' };
+                return { ...f, status: "processing" };
               }
             }
             return f;
-          })
+          }),
         );
       }, 200);
 
       // Simulate completion after upload
       setTimeout(() => {
         clearInterval(interval);
-        setUploadedFiles(prev =>
-          prev.map(f =>
+        setUploadedFiles((prev) =>
+          prev.map((f) =>
             f.id === newFile.id
-              ? { ...f, status: 'completed', progress: 100 }
-              : f
-          )
+              ? { ...f, status: "completed", progress: 100 }
+              : f,
+          ),
         );
       }, 3000);
     });
   };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
-  const getStatusIcon = (status: UploadedFile['status']) => {
+  const getStatusIcon = (status: UploadedFile["status"]) => {
     switch (status) {
-      case 'uploading':
+      case "uploading":
         return <Upload className="h-4 w-4 text-brand-500" />;
-      case 'processing':
+      case "processing":
         return <Brain className="h-4 w-4 text-brand-500 animate-pulse" />;
-      case 'completed':
+      case "completed":
         return <CheckCircle2 className="h-4 w-4 text-success" />;
-      case 'failed':
+      case "failed":
         return <AlertCircle className="h-4 w-4 text-destructive" />;
     }
   };
 
-  const getStatusText = (status: UploadedFile['status']) => {
+  const getStatusText = (status: UploadedFile["status"]) => {
     switch (status) {
-      case 'uploading': return 'Uploading...';
-      case 'processing': return 'Analyzing RFP...';
-      case 'completed': return 'Analysis Complete';
-      case 'failed': return 'Analysis Failed';
+      case "uploading":
+        return "Uploading...";
+      case "processing":
+        return "Analyzing RFP...";
+      case "completed":
+        return "Analysis Complete";
+      case "failed":
+        return "Analysis Failed";
     }
   };
 
@@ -123,12 +143,19 @@ export default function Index() {
                 <FileSearch className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-brand-900">RFP Analyzer</h1>
-                <p className="text-sm text-brand-600">Intelligent RFP Analysis & Summarization</p>
+                <h1 className="text-xl font-bold text-brand-900">
+                  RFP Analyzer
+                </h1>
+                <p className="text-sm text-brand-600">
+                  Intelligent RFP Analysis & Summarization
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Badge variant="secondary" className="bg-brand-100 text-brand-700">
+              <Badge
+                variant="secondary"
+                className="bg-brand-100 text-brand-700"
+              >
                 <Zap className="h-3 w-3 mr-1" />
                 AI-Powered
               </Badge>
@@ -145,8 +172,9 @@ export default function Index() {
             <span className="text-brand-600"> AI Precision</span>
           </h1>
           <p className="text-xl text-brand-700 mb-8 max-w-3xl mx-auto">
-            Extract key insights, summaries, and critical requirements from your cloud RFP documents in seconds. 
-            Let AI handle the heavy lifting while you focus on strategic decisions.
+            Extract key insights, summaries, and critical requirements from your
+            cloud RFP documents in seconds. Let AI handle the heavy lifting
+            while you focus on strategic decisions.
           </p>
         </div>
 
@@ -157,9 +185,9 @@ export default function Index() {
               <div
                 className={cn(
                   "relative rounded-lg border-2 border-dashed p-8 text-center transition-colors",
-                  dragActive 
-                    ? "border-brand-500 bg-brand-100" 
-                    : "border-brand-300 bg-white hover:bg-brand-50"
+                  dragActive
+                    ? "border-brand-500 bg-brand-100"
+                    : "border-brand-300 bg-white hover:bg-brand-50",
                 )}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
@@ -175,9 +203,11 @@ export default function Index() {
                 <p className="text-brand-600 mb-6">
                   Drag and drop your document here, or click to browse
                 </p>
-                <Button 
+                <Button
                   className="bg-brand-600 hover:bg-brand-700"
-                  onClick={() => document.getElementById('file-upload')?.click()}
+                  onClick={() =>
+                    document.getElementById("file-upload")?.click()
+                  }
                 >
                   <Upload className="h-4 w-4 mr-2" />
                   Choose File
@@ -186,7 +216,9 @@ export default function Index() {
                   id="file-upload"
                   type="file"
                   className="hidden"
-                  onChange={(e) => e.target.files && handleFiles(e.target.files)}
+                  onChange={(e) =>
+                    e.target.files && handleFiles(e.target.files)
+                  }
                 />
                 <p className="text-sm text-brand-500 mt-4">
                   Supports all file types up to 50MB
@@ -198,7 +230,9 @@ export default function Index() {
           {/* Uploaded Files */}
           {uploadedFiles.length > 0 && (
             <div className="mt-6 space-y-4">
-              <h3 className="text-lg font-semibold text-brand-900">Processing Documents</h3>
+              <h3 className="text-lg font-semibold text-brand-900">
+                Processing Documents
+              </h3>
               {uploadedFiles.map((file) => (
                 <Card key={file.id} className="border-brand-200">
                   <CardContent className="p-4">
@@ -206,24 +240,34 @@ export default function Index() {
                       <div className="flex items-center space-x-3">
                         {getStatusIcon(file.status)}
                         <div>
-                          <p className="font-medium text-brand-900">{file.name}</p>
-                          <p className="text-sm text-brand-600">{formatFileSize(file.size)}</p>
+                          <p className="font-medium text-brand-900">
+                            {file.name}
+                          </p>
+                          <p className="text-sm text-brand-600">
+                            {formatFileSize(file.size)}
+                          </p>
                         </div>
                       </div>
-                      <Badge 
-                        variant={file.status === 'completed' ? 'default' : 'secondary'}
+                      <Badge
+                        variant={
+                          file.status === "completed" ? "default" : "secondary"
+                        }
                         className={cn(
-                          file.status === 'completed' && "bg-success text-success-foreground"
+                          file.status === "completed" &&
+                            "bg-success text-success-foreground",
                         )}
                       >
                         {getStatusText(file.status)}
                       </Badge>
                     </div>
-                    {file.status !== 'completed' && (
+                    {file.status !== "completed" && (
                       <Progress value={file.progress} className="h-2" />
                     )}
-                    {file.status === 'completed' && (
-                      <Button className="w-full mt-3 bg-brand-600 hover:bg-brand-700" asChild>
+                    {file.status === "completed" && (
+                      <Button
+                        className="w-full mt-3 bg-brand-600 hover:bg-brand-700"
+                        asChild
+                      >
                         <Link to="/results">
                           <FileSearch className="h-4 w-4 mr-2" />
                           View Analysis Results
@@ -244,9 +288,12 @@ export default function Index() {
               <div className="p-2 bg-brand-100 rounded-lg w-fit mb-2">
                 <Brain className="h-6 w-6 text-brand-600" />
               </div>
-              <CardTitle className="text-brand-900">AI-Powered Analysis</CardTitle>
+              <CardTitle className="text-brand-900">
+                AI-Powered Analysis
+              </CardTitle>
               <CardDescription className="text-brand-600">
-                Advanced natural language processing extracts key insights and requirements automatically
+                Advanced natural language processing extracts key insights and
+                requirements automatically
               </CardDescription>
             </CardHeader>
           </Card>
@@ -256,9 +303,12 @@ export default function Index() {
               <div className="p-2 bg-brand-100 rounded-lg w-fit mb-2">
                 <Target className="h-6 w-6 text-brand-600" />
               </div>
-              <CardTitle className="text-brand-900">Smart Categorization</CardTitle>
+              <CardTitle className="text-brand-900">
+                Smart Categorization
+              </CardTitle>
               <CardDescription className="text-brand-600">
-                Automatically categorizes requirements, deadlines, and evaluation criteria for easy review
+                Automatically categorizes requirements, deadlines, and
+                evaluation criteria for easy review
               </CardDescription>
             </CardHeader>
           </Card>
@@ -270,7 +320,8 @@ export default function Index() {
               </div>
               <CardTitle className="text-brand-900">Instant Results</CardTitle>
               <CardDescription className="text-brand-600">
-                Get comprehensive summaries and action items in seconds, not hours of manual review
+                Get comprehensive summaries and action items in seconds, not
+                hours of manual review
               </CardDescription>
             </CardHeader>
           </Card>
@@ -279,10 +330,13 @@ export default function Index() {
         {/* Value Proposition */}
         <Card className="border-brand-200 bg-gradient-to-r from-brand-600 to-brand-700 text-white">
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Transform Your RFP Process</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              Transform Your RFP Process
+            </h2>
             <p className="text-brand-100 text-lg mb-6 max-w-2xl mx-auto">
-              Stop spending hours manually reviewing RFP documents. Our AI-powered platform extracts 
-              critical information, identifies key requirements, and provides actionable insights instantly.
+              Stop spending hours manually reviewing RFP documents. Our
+              AI-powered platform extracts critical information, identifies key
+              requirements, and provides actionable insights instantly.
             </p>
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div>
