@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { FileText, Upload, Brain, Clock, CheckCircle2, AlertCircle, FileSearch, Target, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface UploadedFile {
   id: string;
@@ -224,9 +225,11 @@ export default function Index() {
                       <Progress value={file.progress} className="h-2" />
                     )}
                     {file.status === 'completed' && (
-                      <Button className="w-full mt-3 bg-brand-600 hover:bg-brand-700">
-                        <FileSearch className="h-4 w-4 mr-2" />
-                        View Analysis Results
+                      <Button className="w-full mt-3 bg-brand-600 hover:bg-brand-700" asChild>
+                        <Link to="/results">
+                          <FileSearch className="h-4 w-4 mr-2" />
+                          View Analysis Results
+                        </Link>
                       </Button>
                     )}
                   </CardContent>
