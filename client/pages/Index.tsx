@@ -293,7 +293,7 @@ export default function Index() {
                 <div className="text-brand-200">Accuracy Rate</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-white">< 60s</div>
+                <div className="text-3xl font-bold text-white">&lt; 60s</div>
                 <div className="text-brand-200">Processing Time</div>
               </div>
             </div>
