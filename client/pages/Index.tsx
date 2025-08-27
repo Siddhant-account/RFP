@@ -185,12 +185,11 @@ export default function Index() {
                 <input
                   id="file-upload"
                   type="file"
-                  accept=".pdf"
                   className="hidden"
                   onChange={(e) => e.target.files && handleFiles(e.target.files)}
                 />
                 <p className="text-sm text-brand-500 mt-4">
-                  Supports PDF files up to 50MB
+                  Supports all file types up to 50MB
                 </p>
               </div>
             </CardContent>
