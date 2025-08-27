@@ -170,10 +170,10 @@ export default function Index() {
                   <FileText className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-lg font-semibold text-brand-900 mb-2">
-                  Upload Your RFP Document
+                  Upload Your Document
                 </h3>
                 <p className="text-brand-600 mb-6">
-                  Drag and drop your PDF RFP document here, or click to browse
+                  Drag and drop your document here, or click to browse
                 </p>
                 <Button 
                   className="bg-brand-600 hover:bg-brand-700"
