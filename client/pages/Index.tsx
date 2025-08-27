@@ -41,45 +41,44 @@ export default function Index() {
 
   const handleFiles = (files: FileList) => {
     Array.from(files).forEach((file) => {
-      if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
-        const newFile: UploadedFile = {
-          id: Date.now().toString(),
-          name: file.name,
-          size: file.size,
-          progress: 0,
-          status: 'uploading'
-        };
-        
-        setUploadedFiles(prev => [...prev, newFile]);
-        
-        // Simulate upload progress
-        const interval = setInterval(() => {
-          setUploadedFiles(prev => 
-            prev.map(f => {
-              if (f.id === newFile.id) {
-                if (f.progress < 100) {
-                  return { ...f, progress: Math.min(f.progress + 10, 100) };
-                } else {
-                  return { ...f, status: 'processing' };
-                }
-              }
-              return f;
-            })
-          );
-        }, 200);
+      // Accept all file types
+      const newFile: UploadedFile = {
+        id: Date.now().toString(),
+        name: file.name,
+        size: file.size,
+        progress: 0,
+        status: 'uploading'
+      };
 
-        // Simulate completion after upload
-        setTimeout(() => {
-          clearInterval(interval);
-          setUploadedFiles(prev => 
-            prev.map(f => 
-              f.id === newFile.id 
-                ? { ...f, status: 'completed', progress: 100 }
-                : f
-            )
-          );
-        }, 3000);
-      }
+      setUploadedFiles(prev => [...prev, newFile]);
+
+      // Simulate upload progress
+      const interval = setInterval(() => {
+        setUploadedFiles(prev =>
+          prev.map(f => {
+            if (f.id === newFile.id) {
+              if (f.progress < 100) {
+                return { ...f, progress: Math.min(f.progress + 10, 100) };
+              } else {
+                return { ...f, status: 'processing' };
+              }
+            }
+            return f;
+          })
+        );
+      }, 200);
+
+      // Simulate completion after upload
+      setTimeout(() => {
+        clearInterval(interval);
+        setUploadedFiles(prev =>
+          prev.map(f =>
+            f.id === newFile.id
+              ? { ...f, status: 'completed', progress: 100 }
+              : f
+          )
+        );
+      }, 3000);
     });
   };
 
