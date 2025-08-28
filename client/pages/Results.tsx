@@ -227,7 +227,10 @@ export default function Results() {
                     >
                       {filteredKeyPoints.length} items
                     </Badge>
-                    <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                    <Badge
+                      variant="outline"
+                      className="text-xs bg-blue-50 text-blue-700 border-blue-200"
+                    >
                       Click page refs to view document
                     </Badge>
                   </div>
@@ -280,7 +283,9 @@ export default function Results() {
                                 className="text-xs hover:bg-brand-100 cursor-pointer transition-colors"
                                 asChild
                               >
-                                <Link to={`/document?page=${point.pageReference}&docId=${mockAnalysis.documentId}`}>
+                                <Link
+                                  to={`/document?page=${point.pageReference}&docId=${mockAnalysis.documentId}`}
+                                >
                                   Page {point.pageReference}
                                 </Link>
                               </Badge>
