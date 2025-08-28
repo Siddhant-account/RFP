@@ -282,7 +282,16 @@ export default function Results() {
                             )}
                           </div>
                           <h4 className="font-semibold text-brand-900 mb-2">
-                            {point.title}
+                            {point.pageReference ? (
+                              <Link
+                                to={`/document?page=${point.pageReference}&docId=${mockAnalysis.documentId}`}
+                                className="hover:text-brand-600 hover:underline cursor-pointer transition-colors"
+                              >
+                                {point.title}
+                              </Link>
+                            ) : (
+                              point.title
+                            )}
                           </h4>
                           <p className="text-brand-700 text-sm">
                             {point.description}
