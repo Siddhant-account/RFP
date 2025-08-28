@@ -31,4 +31,9 @@ const App = () => (
   </QueryClientProvider>
 );
 
-createRoot(document.getElementById("root")!).render(<App />);
+// Prevent multiple root creation in development
+const rootElement = document.getElementById("root")!;
+if (!rootElement.dataset.reactRoot) {
+  rootElement.dataset.reactRoot = "true";
+  createRoot(rootElement).render(<App />);
+}

@@ -278,17 +278,12 @@ export default function Results() {
                               </Badge>
                             </div>
                             {point.pageReference && (
-                              <Badge
-                                variant="outline"
-                                className="text-xs hover:bg-brand-100 cursor-pointer transition-colors"
-                                asChild
+                              <Link
+                                to={`/document?page=${point.pageReference}&docId=${mockAnalysis.documentId}`}
+                                className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-brand-100 cursor-pointer"
                               >
-                                <Link
-                                  to={`/document?page=${point.pageReference}&docId=${mockAnalysis.documentId}`}
-                                >
-                                  Page {point.pageReference}
-                                </Link>
-                              </Badge>
+                                Page {point.pageReference}
+                              </Link>
                             )}
                           </div>
                           <h4 className="font-semibold text-brand-900 mb-2">

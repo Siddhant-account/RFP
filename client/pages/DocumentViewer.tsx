@@ -19,8 +19,8 @@ import { cn } from "@/lib/utils";
 // Set up PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-// Mock PDF URL for demonstration
-const MOCK_PDF_URL = "/placeholder.pdf";
+// Mock PDF URL for demonstration - using a sample PDF
+const MOCK_PDF_URL = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
 
 export default function DocumentViewer() {
   const [searchParams] = useSearchParams();
