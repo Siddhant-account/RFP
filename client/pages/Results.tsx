@@ -270,8 +270,14 @@ export default function Results() {
                               </Badge>
                             </div>
                             {point.pageReference && (
-                              <Badge variant="outline" className="text-xs">
-                                Page {point.pageReference}
+                              <Badge
+                                variant="outline"
+                                className="text-xs hover:bg-brand-100 cursor-pointer transition-colors"
+                                asChild
+                              >
+                                <Link to={`/document?page=${point.pageReference}&docId=${mockAnalysis.documentId}`}>
+                                  Page {point.pageReference}
+                                </Link>
                               </Badge>
                             )}
                           </div>
