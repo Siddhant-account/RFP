@@ -27,31 +27,15 @@ export default function DocumentViewer() {
   const targetPage = parseInt(searchParams.get("page") || "1");
   const documentId = searchParams.get("docId") || "unknown";
 
-  const [numPages, setNumPages] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState(targetPage);
+  const [numPages] = useState(45); // Mock total pages
+  const [currentPage, setCurrentPage] = useState(targetPage || 1);
   const [scale, setScale] = useState(1.2);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  const onDocumentLoadSuccess = useCallback(
-    ({ numPages }: { numPages: number }) => {
-      setNumPages(numPages);
-      setLoading(false);
-      // If a target page was specified, navigate to it
-      if (targetPage && targetPage <= numPages) {
-        setCurrentPage(targetPage);
-      }
-    },
-    [targetPage],
-  );
-
-  const onDocumentLoadError = useCallback((error: Error) => {
-    console.error("Error loading PDF:", error);
-    setError(
-      "Failed to load document. This is a demo - in production, the actual uploaded document would be displayed here.",
-    );
-    setLoading(false);
-  }, []);
+  useEffect(() => {
+    if (targetPage && targetPage <= numPages) {
+      setCurrentPage(targetPage);
+    }
+  }, [targetPage, numPages]);
 
   const goToPrevPage = () => {
     setCurrentPage((prev) => Math.max(1, prev - 1));
@@ -186,21 +170,23 @@ export default function DocumentViewer() {
 
                 {!error && (
                   <div className="flex justify-center">
-                    <div className="border border-brand-200 shadow-lg">
-                      <Document
-                        file={MOCK_PDF_URL}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                        onLoadError={onDocumentLoadError}
-                        loading=""
-                      >
-                        <Page
-                          pageNumber={currentPage}
-                          scale={scale}
-                          renderTextLayer={false}
-                          renderAnnotationLayer={false}
-                          loading=""
-                        />
-                      </Document>
+                    <div className="border border-brand-200 shadow-lg bg-white p-8 rounded-lg">
+                      <div className="text-center">
+                        <FileText className="h-16 w-16 text-brand-400 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-brand-900 mb-2">
+                          Document Viewer Demo
+                        </h3>
+                        <p className="text-brand-600 mb-4">
+                          In production, this would display page {currentPage} of your uploaded document.
+                        </p>
+                        <div className="bg-brand-50 p-4 rounded border border-brand-200">
+                          <p className="text-sm text-brand-700">
+                            <strong>Mock Page {currentPage} Content:</strong><br />
+                            This represents the content that would be displayed from your RFP document.
+                            The actual implementation would render the real PDF page here.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
