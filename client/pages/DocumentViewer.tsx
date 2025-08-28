@@ -3,23 +3,23 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  ArrowLeft, 
-  ZoomIn, 
-  ZoomOut, 
-  ChevronLeft, 
+import {
+  ArrowLeft,
+  ZoomIn,
+  ZoomOut,
+  ChevronLeft,
   ChevronRight,
   FileText,
   Maximize2,
-  RotateCw
+  RotateCw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function DocumentViewer() {
   const [searchParams] = useSearchParams();
-  const targetPage = parseInt(searchParams.get('page') || '1');
-  const documentId = searchParams.get('docId') || 'unknown';
-  
+  const targetPage = parseInt(searchParams.get("page") || "1");
+  const documentId = searchParams.get("docId") || "unknown";
+
   const [numPages] = useState(45); // Mock total pages
   const [currentPage, setCurrentPage] = useState(targetPage || 1);
   const [scale, setScale] = useState(1.2);
@@ -31,19 +31,19 @@ export default function DocumentViewer() {
   }, [targetPage, numPages]);
 
   const goToPrevPage = () => {
-    setCurrentPage(prev => Math.max(1, prev - 1));
+    setCurrentPage((prev) => Math.max(1, prev - 1));
   };
 
   const goToNextPage = () => {
-    setCurrentPage(prev => Math.min(numPages, prev + 1));
+    setCurrentPage((prev) => Math.min(numPages, prev + 1));
   };
 
   const zoomIn = () => {
-    setScale(prev => Math.min(3, prev + 0.2));
+    setScale((prev) => Math.min(3, prev + 0.2));
   };
 
   const zoomOut = () => {
-    setScale(prev => Math.max(0.5, prev - 0.2));
+    setScale((prev) => Math.max(0.5, prev - 0.2));
   };
 
   const goToPage = (page: number) => {
@@ -67,18 +67,25 @@ export default function DocumentViewer() {
               </Button>
               <div className="h-6 w-px bg-border" />
               <div>
-                <h1 className="text-xl font-bold text-brand-900">Document Viewer</h1>
+                <h1 className="text-xl font-bold text-brand-900">
+                  Document Viewer
+                </h1>
                 <p className="text-sm text-brand-600">
                   {targetPage && `Viewing page ${targetPage} • `}
                   Cloud Infrastructure RFP
                 </p>
               </div>
             </div>
-            
+
             {/* Page Navigation */}
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm" onClick={goToPrevPage} disabled={currentPage <= 1}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={goToPrevPage}
+                  disabled={currentPage <= 1}
+                >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
                 <div className="flex items-center space-x-2">
@@ -93,11 +100,16 @@ export default function DocumentViewer() {
                   />
                   <span className="text-sm text-brand-700">of {numPages}</span>
                 </div>
-                <Button variant="outline" size="sm" onClick={goToNextPage} disabled={currentPage >= numPages}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={goToNextPage}
+                  disabled={currentPage >= numPages}
+                >
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
-              
+
               {/* Zoom Controls */}
               <div className="flex items-center space-x-2">
                 <Button variant="outline" size="sm" onClick={zoomOut}>
@@ -129,7 +141,8 @@ export default function DocumentViewer() {
                         Document Viewer Demo
                       </h3>
                       <p className="text-brand-600 mb-4">
-                        In production, this would display page {currentPage} of your uploaded document.
+                        In production, this would display page {currentPage} of
+                        your uploaded document.
                       </p>
                       <div className="bg-brand-50 p-6 rounded border border-brand-200">
                         <p className="text-sm text-brand-700 mb-4">
@@ -138,30 +151,59 @@ export default function DocumentViewer() {
                         <div className="text-left space-y-2 text-sm text-brand-700">
                           {currentPage === 12 && (
                             <div className="bg-yellow-50 p-3 rounded border-l-4 border-yellow-400">
-                              <p><strong>Multi-cloud deployment capability</strong></p>
-                              <p>Solution must support AWS, Azure, and Google Cloud platforms with unified management interface...</p>
+                              <p>
+                                <strong>
+                                  Multi-cloud deployment capability
+                                </strong>
+                              </p>
+                              <p>
+                                Solution must support AWS, Azure, and Google
+                                Cloud platforms with unified management
+                                interface...
+                              </p>
                             </div>
                           )}
                           {currentPage === 18 && (
                             <div className="bg-red-50 p-3 rounded border-l-4 border-red-400">
-                              <p><strong>Security compliance requirements</strong></p>
-                              <p>Must meet SOC 2 Type II, GDPR, and HIPAA compliance standards...</p>
+                              <p>
+                                <strong>
+                                  Security compliance requirements
+                                </strong>
+                              </p>
+                              <p>
+                                Must meet SOC 2 Type II, GDPR, and HIPAA
+                                compliance standards...
+                              </p>
                             </div>
                           )}
                           {currentPage === 22 && (
                             <div className="bg-purple-50 p-3 rounded border-l-4 border-purple-400">
-                              <p><strong>Data migration requirements</strong></p>
-                              <p>Migration of 50TB of data with zero downtime requirement...</p>
+                              <p>
+                                <strong>Data migration requirements</strong>
+                              </p>
+                              <p>
+                                Migration of 50TB of data with zero downtime
+                                requirement...
+                              </p>
                             </div>
                           )}
                           {currentPage === 25 && (
                             <div className="bg-green-50 p-3 rounded border-l-4 border-green-400">
-                              <p><strong>Budget constraints</strong></p>
-                              <p>Total annual cost should not exceed $500,000...</p>
+                              <p>
+                                <strong>Budget constraints</strong>
+                              </p>
+                              <p>
+                                Total annual cost should not exceed $500,000...
+                              </p>
                             </div>
                           )}
                           {![12, 18, 22, 25].includes(currentPage) && (
-                            <p>This represents the content that would be displayed from your RFP document. The actual implementation would render the real PDF page here.</p>
+                            <p>
+                              This represents the content that would be
+                              displayed from your RFP document. The actual
+                              implementation would render the real PDF page
+                              here.
+                            </p>
                           )}
                         </div>
                       </div>
@@ -183,46 +225,50 @@ export default function DocumentViewer() {
                 {targetPage && (
                   <div className="p-3 bg-brand-50 rounded-lg border border-brand-200">
                     <div className="flex items-center space-x-2 mb-2">
-                      <Badge variant="outline" className="bg-blue-100 text-blue-800">
+                      <Badge
+                        variant="outline"
+                        className="bg-blue-100 text-blue-800"
+                      >
                         Target Page
                       </Badge>
                     </div>
                     <p className="text-sm text-brand-700">
-                      You navigated to page {targetPage} from the analysis results.
+                      You navigated to page {targetPage} from the analysis
+                      results.
                     </p>
                   </div>
                 )}
-                
+
                 <div className="space-y-2">
                   <h4 className="font-medium text-brand-900">Quick Jump</h4>
                   <div className="grid grid-cols-2 gap-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => goToPage(12)}
                       className={cn(currentPage === 12 && "bg-brand-100")}
                     >
                       Page 12
                     </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => goToPage(18)}
                       className={cn(currentPage === 18 && "bg-brand-100")}
                     >
                       Page 18
                     </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => goToPage(22)}
                       className={cn(currentPage === 22 && "bg-brand-100")}
                     >
                       Page 22
                     </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => goToPage(25)}
                       className={cn(currentPage === 25 && "bg-brand-100")}
                     >
@@ -245,7 +291,9 @@ export default function DocumentViewer() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-brand-600">Current Page:</span>
-                  <span className="font-medium text-brand-900">{currentPage}</span>
+                  <span className="font-medium text-brand-900">
+                    {currentPage}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-brand-600">Total Pages:</span>
@@ -253,7 +301,9 @@ export default function DocumentViewer() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-brand-600">Zoom Level:</span>
-                  <span className="font-medium text-brand-900">{Math.round(scale * 100)}%</span>
+                  <span className="font-medium text-brand-900">
+                    {Math.round(scale * 100)}%
+                  </span>
                 </div>
               </CardContent>
             </Card>
@@ -272,7 +322,11 @@ export default function DocumentViewer() {
                   <RotateCw className="h-4 w-4 mr-2" />
                   Rotate Page
                 </Button>
-                <Button className="w-full justify-start" variant="outline" asChild>
+                <Button
+                  className="w-full justify-start"
+                  variant="outline"
+                  asChild
+                >
                   <Link to="/results">
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Back to Analysis
