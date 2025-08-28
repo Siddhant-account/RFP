@@ -220,12 +220,17 @@ export default function Results() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>Key Points & Requirements</CardTitle>
-                  <Badge
-                    variant="secondary"
-                    className="bg-brand-100 text-brand-700"
-                  >
-                    {filteredKeyPoints.length} items
-                  </Badge>
+                  <div className="flex items-center space-x-2">
+                    <Badge
+                      variant="secondary"
+                      className="bg-brand-100 text-brand-700"
+                    >
+                      {filteredKeyPoints.length} items
+                    </Badge>
+                    <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                      Click page refs to view document
+                    </Badge>
+                  </div>
                 </div>
 
                 {/* Category Filter */}
