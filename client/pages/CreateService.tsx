@@ -111,13 +111,17 @@ const defaultPhases: ProjectPhase[] = [
 
 export default function CreateService() {
   const [searchParams] = useSearchParams();
-  const fileUrl = searchParams.get('fileUrl');
-  const fileName = searchParams.get('fileName') || 'Uploaded Document';
-  const fileId = searchParams.get('fileId') || 'uploaded-file';
+  const fileUrl = searchParams.get("fileUrl");
+  const fileName = searchParams.get("fileName") || "Uploaded Document";
+  const fileId = searchParams.get("fileId") || "uploaded-file";
 
   const [phases, setPhases] = useState<ProjectPhase[]>(defaultPhases);
-  const [projectName, setProjectName] = useState("Cloud Infrastructure Migration Project");
-  const [projectDescription, setProjectDescription] = useState("Migration and modernization of existing infrastructure to multi-cloud environment based on RFP requirements");
+  const [projectName, setProjectName] = useState(
+    "Cloud Infrastructure Migration Project",
+  );
+  const [projectDescription, setProjectDescription] = useState(
+    "Migration and modernization of existing infrastructure to multi-cloud environment based on RFP requirements",
+  );
   const [startDate, setStartDate] = useState("2024-02-01");
   const [endDate, setEndDate] = useState("2024-07-31");
 
@@ -161,11 +165,11 @@ export default function CreateService() {
   };
 
   const removePhase = (id: string) => {
-    setPhases(phases.filter(phase => phase.id !== id));
+    setPhases(phases.filter((phase) => phase.id !== id));
   };
 
   const totalWeeks = phases.reduce((total, phase) => {
-    const weeks = parseInt(phase.duration.split(' ')[0]) || 0;
+    const weeks = parseInt(phase.duration.split(" ")[0]) || 0;
     return total + weeks;
   }, 0);
 
@@ -177,17 +181,19 @@ export default function CreateService() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" asChild>
-                <Link to={`/results?fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}>
+                <Link
+                  to={`/results?fileUrl=${encodeURIComponent(fileUrl || "")}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}
+                >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Results
                 </Link>
               </Button>
               <Separator orientation="vertical" className="h-6" />
               <div>
-                <h1 className="text-xl font-bold text-brand-900">Create Project Timeline</h1>
-                <p className="text-sm text-brand-600">
-                  Based on {fileName}
-                </p>
+                <h1 className="text-xl font-bold text-brand-900">
+                  Create Project Timeline
+                </h1>
+                <p className="text-sm text-brand-600">Based on {fileName}</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -265,11 +271,15 @@ export default function CreateService() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <div className="text-2xl font-bold text-blue-600">{phases.length}</div>
+                    <div className="text-2xl font-bold text-blue-600">
+                      {phases.length}
+                    </div>
                     <div className="text-sm text-blue-700">Total Phases</div>
                   </div>
                   <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
-                    <div className="text-2xl font-bold text-green-600">{totalWeeks}</div>
+                    <div className="text-2xl font-bold text-green-600">
+                      {totalWeeks}
+                    </div>
                     <div className="text-sm text-green-700">Total Weeks</div>
                   </div>
                 </div>
@@ -277,19 +287,19 @@ export default function CreateService() {
                   <div className="flex justify-between text-sm">
                     <span className="text-brand-600">Completed:</span>
                     <span className="font-medium">
-                      {phases.filter(p => p.status === "completed").length}
+                      {phases.filter((p) => p.status === "completed").length}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-brand-600">In Progress:</span>
                     <span className="font-medium">
-                      {phases.filter(p => p.status === "in-progress").length}
+                      {phases.filter((p) => p.status === "in-progress").length}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-brand-600">Pending:</span>
                     <span className="font-medium">
-                      {phases.filter(p => p.status === "pending").length}
+                      {phases.filter((p) => p.status === "pending").length}
                     </span>
                   </div>
                 </div>
@@ -300,8 +310,14 @@ export default function CreateService() {
           {/* Project Phases */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-brand-900">Project Phases</h2>
-              <Button onClick={addNewPhase} size="sm" className="bg-brand-600 hover:bg-brand-700">
+              <h2 className="text-2xl font-bold text-brand-900">
+                Project Phases
+              </h2>
+              <Button
+                onClick={addNewPhase}
+                size="sm"
+                className="bg-brand-600 hover:bg-brand-700"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Phase
               </Button>
@@ -318,18 +334,24 @@ export default function CreateService() {
                             {index + 1}
                           </div>
                           <div>
-                            <CardTitle className="text-lg">{phase.name}</CardTitle>
-                            <CardDescription>{phase.description}</CardDescription>
+                            <CardTitle className="text-lg">
+                              {phase.name}
+                            </CardTitle>
+                            <CardDescription>
+                              {phase.description}
+                            </CardDescription>
                           </div>
                         </div>
                         <div className="flex items-center space-x-2">
                           <Badge className={getStatusColor(phase.status)}>
                             {getStatusIcon(phase.status)}
-                            <span className="ml-1 capitalize">{phase.status.replace('-', ' ')}</span>
+                            <span className="ml-1 capitalize">
+                              {phase.status.replace("-", " ")}
+                            </span>
                           </Badge>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => removePhase(phase.id)}
                             className="text-red-600 hover:text-red-700 hover:bg-red-50"
                           >
@@ -341,17 +363,23 @@ export default function CreateService() {
                     <CardContent>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <Label className="text-sm font-medium text-brand-600">Duration</Label>
+                          <Label className="text-sm font-medium text-brand-600">
+                            Duration
+                          </Label>
                           <div className="flex items-center space-x-2 mt-1">
                             <Clock className="h-4 w-4 text-brand-500" />
                             <span className="text-sm">{phase.duration}</span>
                           </div>
                         </div>
                         <div>
-                          <Label className="text-sm font-medium text-brand-600">Assignees</Label>
+                          <Label className="text-sm font-medium text-brand-600">
+                            Assignees
+                          </Label>
                           <div className="flex items-center space-x-2 mt-1">
                             <Users className="h-4 w-4 text-brand-500" />
-                            <span className="text-sm">{phase.assignees.length} assigned</span>
+                            <span className="text-sm">
+                              {phase.assignees.length} assigned
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -359,7 +387,11 @@ export default function CreateService() {
                         <div className="mt-3">
                           <div className="flex flex-wrap gap-2">
                             {phase.assignees.map((assignee, i) => (
-                              <Badge key={i} variant="outline" className="text-xs">
+                              <Badge
+                                key={i}
+                                variant="outline"
+                                className="text-xs"
+                              >
                                 {assignee}
                               </Badge>
                             ))}
@@ -368,12 +400,18 @@ export default function CreateService() {
                       )}
                       {phase.dependencies.length > 0 && (
                         <div className="mt-3">
-                          <Label className="text-sm font-medium text-brand-600">Dependencies</Label>
+                          <Label className="text-sm font-medium text-brand-600">
+                            Dependencies
+                          </Label>
                           <div className="flex flex-wrap gap-2 mt-1">
                             {phase.dependencies.map((depId) => {
-                              const dep = phases.find(p => p.id === depId);
+                              const dep = phases.find((p) => p.id === depId);
                               return dep ? (
-                                <Badge key={depId} variant="secondary" className="text-xs">
+                                <Badge
+                                  key={depId}
+                                  variant="secondary"
+                                  className="text-xs"
+                                >
                                   {dep.name}
                                 </Badge>
                               ) : null;

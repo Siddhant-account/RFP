@@ -27,7 +27,10 @@ const App = () => (
           <Route path="/results" element={<Results />} />
           <Route path="/document" element={<DocumentViewer />} />
           <Route path="/create-service" element={<CreateService />} />
-          <Route path="/compliance-checklist" element={<ComplianceChecklist />} />
+          <Route
+            path="/compliance-checklist"
+            element={<ComplianceChecklist />}
+          />
           <Route path="/estimation-tool" element={<EstimationTool />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

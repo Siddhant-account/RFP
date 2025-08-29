@@ -273,7 +273,9 @@ export default function Index() {
                         className="w-full mt-3 bg-brand-600 hover:bg-brand-700"
                         asChild
                       >
-                        <Link to={`/results?fileUrl=${encodeURIComponent(file.fileUrl || '')}&fileName=${encodeURIComponent(file.name)}&fileId=${file.id}`}>
+                        <Link
+                          to={`/results?fileUrl=${encodeURIComponent(file.fileUrl || "")}&fileName=${encodeURIComponent(file.name)}&fileId=${file.id}`}
+                        >
                           <FileSearch className="h-4 w-4 mr-2" />
                           View Analysis Results
                         </Link>

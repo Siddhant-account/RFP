@@ -57,9 +57,9 @@ interface EstimationParameters {
 
 export default function EstimationTool() {
   const [searchParams] = useSearchParams();
-  const fileUrl = searchParams.get('fileUrl');
-  const fileName = searchParams.get('fileName') || 'Uploaded Document';
-  const fileId = searchParams.get('fileId') || 'uploaded-file';
+  const fileUrl = searchParams.get("fileUrl");
+  const fileName = searchParams.get("fileName") || "Uploaded Document";
+  const fileId = searchParams.get("fileId") || "uploaded-file";
 
   const [parameters, setParameters] = useState<EstimationParameters>({
     projectDuration: 6,
@@ -174,40 +174,52 @@ export default function EstimationTool() {
 
   // Calculate costs based on parameters
   const calculateCosts = () => {
-    const updatedComponents = costComponents.map(component => {
+    const updatedComponents = costComponents.map((component) => {
       let adjustedPrice = component.basePrice;
       let adjustedQuantity = component.quantity;
 
       // Adjust pricing based on parameters
       if (component.category === "infrastructure") {
         // Cloud provider multiplier
-        const providerMultiplier = parameters.cloudProvider === "aws" ? 1.0 : 
-                                   parameters.cloudProvider === "azure" ? 1.1 : 1.15;
+        const providerMultiplier =
+          parameters.cloudProvider === "aws"
+            ? 1.0
+            : parameters.cloudProvider === "azure"
+              ? 1.1
+              : 1.15;
         adjustedPrice *= providerMultiplier;
 
         // Data volume impact
         if (component.name.includes("Storage")) {
-          adjustedPrice *= (1 + (parameters.dataVolume / 100));
+          adjustedPrice *= 1 + parameters.dataVolume / 100;
         }
       }
 
       if (component.category === "personnel") {
         // Team size impact on project complexity
-        const complexityMultiplier = 1 + ((parameters.teamSize - 5) * 0.1);
+        const complexityMultiplier = 1 + (parameters.teamSize - 5) * 0.1;
         adjustedPrice *= Math.max(0.8, complexityMultiplier);
       }
 
-      if (component.category === "software" || component.category === "services") {
+      if (
+        component.category === "software" ||
+        component.category === "services"
+      ) {
         // Compliance level impact
-        const complianceMultiplier = parameters.complianceLevel === "high" ? 1.3 :
-                                     parameters.complianceLevel === "medium" ? 1.1 : 1.0;
+        const complianceMultiplier =
+          parameters.complianceLevel === "high"
+            ? 1.3
+            : parameters.complianceLevel === "medium"
+              ? 1.1
+              : 1.0;
         adjustedPrice *= complianceMultiplier;
       }
 
       // Update quantity for duration-based items
       if (component.unit === "month") {
-        adjustedQuantity = component.name.includes("DevOps Engineers") ? 
-                          parameters.projectDuration * 2 : parameters.projectDuration;
+        adjustedQuantity = component.name.includes("DevOps Engineers")
+          ? parameters.projectDuration * 2
+          : parameters.projectDuration;
       }
 
       return {
@@ -227,16 +239,22 @@ export default function EstimationTool() {
 
   const updateParameter = <K extends keyof EstimationParameters>(
     key: K,
-    value: EstimationParameters[K]
+    value: EstimationParameters[K],
   ) => {
-    setParameters(prev => ({ ...prev, [key]: value }));
+    setParameters((prev) => ({ ...prev, [key]: value }));
     setTimeout(calculateCosts, 100);
   };
 
-  const totalCost = costComponents.reduce((sum, component) => sum + component.totalCost, 0);
+  const totalCost = costComponents.reduce(
+    (sum, component) => sum + component.totalCost,
+    0,
+  );
   const monthlyRecurringCost = costComponents
-    .filter(c => c.unit === "month")
-    .reduce((sum, component) => sum + (component.totalCost / component.quantity), 0);
+    .filter((c) => c.unit === "month")
+    .reduce(
+      (sum, component) => sum + component.totalCost / component.quantity,
+      0,
+    );
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -268,10 +286,14 @@ export default function EstimationTool() {
     }
   };
 
-  const costByCategory = costComponents.reduce((acc, component) => {
-    acc[component.category] = (acc[component.category] || 0) + component.totalCost;
-    return acc;
-  }, {} as Record<string, number>);
+  const costByCategory = costComponents.reduce(
+    (acc, component) => {
+      acc[component.category] =
+        (acc[component.category] || 0) + component.totalCost;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-100">
@@ -281,17 +303,19 @@ export default function EstimationTool() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" asChild>
-                <Link to={`/results?fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}>
+                <Link
+                  to={`/results?fileUrl=${encodeURIComponent(fileUrl || "")}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}
+                >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Results
                 </Link>
               </Button>
               <Separator orientation="vertical" className="h-6" />
               <div>
-                <h1 className="text-xl font-bold text-brand-900">Cost Estimation Tool</h1>
-                <p className="text-sm text-brand-600">
-                  Based on {fileName}
-                </p>
+                <h1 className="text-xl font-bold text-brand-900">
+                  Cost Estimation Tool
+                </h1>
+                <p className="text-sm text-brand-600">Based on {fileName}</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -323,42 +347,54 @@ export default function EstimationTool() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label htmlFor="duration">Project Duration: {parameters.projectDuration} months</Label>
+                  <Label htmlFor="duration">
+                    Project Duration: {parameters.projectDuration} months
+                  </Label>
                   <Slider
                     id="duration"
                     min={3}
                     max={24}
                     step={1}
                     value={[parameters.projectDuration]}
-                    onValueChange={(value) => updateParameter('projectDuration', value[0])}
+                    onValueChange={(value) =>
+                      updateParameter("projectDuration", value[0])
+                    }
                     className="mt-2"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="teamSize">Team Size: {parameters.teamSize} people</Label>
+                  <Label htmlFor="teamSize">
+                    Team Size: {parameters.teamSize} people
+                  </Label>
                   <Slider
                     id="teamSize"
                     min={3}
                     max={15}
                     step={1}
                     value={[parameters.teamSize]}
-                    onValueChange={(value) => updateParameter('teamSize', value[0])}
+                    onValueChange={(value) =>
+                      updateParameter("teamSize", value[0])
+                    }
                     className="mt-2"
                   />
                 </div>
 
                 <div>
                   <Label htmlFor="cloudProvider">Primary Cloud Provider</Label>
-                  <Select 
-                    value={parameters.cloudProvider} 
-                    onValueChange={(value) => updateParameter('cloudProvider', value)}
+                  <Select
+                    value={parameters.cloudProvider}
+                    onValueChange={(value) =>
+                      updateParameter("cloudProvider", value)
+                    }
                   >
                     <SelectTrigger id="cloudProvider" className="mt-1">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="aws">Amazon Web Services (AWS)</SelectItem>
+                      <SelectItem value="aws">
+                        Amazon Web Services (AWS)
+                      </SelectItem>
                       <SelectItem value="azure">Microsoft Azure</SelectItem>
                       <SelectItem value="gcp">Google Cloud Platform</SelectItem>
                     </SelectContent>
@@ -366,31 +402,41 @@ export default function EstimationTool() {
                 </div>
 
                 <div>
-                  <Label htmlFor="dataVolume">Data Volume: {parameters.dataVolume} TB</Label>
+                  <Label htmlFor="dataVolume">
+                    Data Volume: {parameters.dataVolume} TB
+                  </Label>
                   <Slider
                     id="dataVolume"
                     min={10}
                     max={500}
                     step={10}
                     value={[parameters.dataVolume]}
-                    onValueChange={(value) => updateParameter('dataVolume', value[0])}
+                    onValueChange={(value) =>
+                      updateParameter("dataVolume", value[0])
+                    }
                     className="mt-2"
                   />
                 </div>
 
                 <div>
                   <Label htmlFor="compliance">Compliance Requirements</Label>
-                  <Select 
-                    value={parameters.complianceLevel} 
-                    onValueChange={(value) => updateParameter('complianceLevel', value)}
+                  <Select
+                    value={parameters.complianceLevel}
+                    onValueChange={(value) =>
+                      updateParameter("complianceLevel", value)
+                    }
                   >
                     <SelectTrigger id="compliance" className="mt-1">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="basic">Basic Security</SelectItem>
-                      <SelectItem value="medium">Standard Compliance</SelectItem>
-                      <SelectItem value="high">High Compliance (SOC2, GDPR, HIPAA)</SelectItem>
+                      <SelectItem value="medium">
+                        Standard Compliance
+                      </SelectItem>
+                      <SelectItem value="high">
+                        High Compliance (SOC2, GDPR, HIPAA)
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -406,7 +452,9 @@ export default function EstimationTool() {
                   <div className="text-3xl font-bold text-brand-900">
                     ${totalCost.toLocaleString()}
                   </div>
-                  <div className="text-sm text-brand-600">Total Project Cost</div>
+                  <div className="text-sm text-brand-600">
+                    Total Project Cost
+                  </div>
                 </div>
 
                 <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
@@ -420,9 +468,16 @@ export default function EstimationTool() {
 
                 <div className="space-y-2">
                   {Object.entries(costByCategory).map(([category, cost]) => (
-                    <div key={category} className="flex justify-between text-sm">
-                      <span className="text-brand-600 capitalize">{category}:</span>
-                      <span className="font-medium">${cost.toLocaleString()}</span>
+                    <div
+                      key={category}
+                      className="flex justify-between text-sm"
+                    >
+                      <span className="text-brand-600 capitalize">
+                        {category}:
+                      </span>
+                      <span className="font-medium">
+                        ${cost.toLocaleString()}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -442,12 +497,19 @@ export default function EstimationTool() {
                 <ScrollArea className="h-[800px]">
                   <div className="space-y-4">
                     {costComponents.map((component) => (
-                      <Card key={component.id} className="border border-brand-100">
+                      <Card
+                        key={component.id}
+                        className="border border-brand-100"
+                      >
                         <CardContent className="p-6">
                           <div className="flex items-start justify-between mb-4">
                             <div className="space-y-2">
-                              <h3 className="font-semibold text-brand-900">{component.name}</h3>
-                              <p className="text-sm text-brand-700">{component.description}</p>
+                              <h3 className="font-semibold text-brand-900">
+                                {component.name}
+                              </h3>
+                              <p className="text-sm text-brand-700">
+                                {component.description}
+                              </p>
                             </div>
                             <div className="text-right space-y-1">
                               <div className="text-2xl font-bold text-brand-900">
@@ -458,22 +520,37 @@ export default function EstimationTool() {
                                 className={getCategoryColor(component.category)}
                               >
                                 {getCategoryIcon(component.category)}
-                                <span className="ml-1 capitalize">{component.category}</span>
+                                <span className="ml-1 capitalize">
+                                  {component.category}
+                                </span>
                               </Badge>
                             </div>
                           </div>
 
                           <div className="grid grid-cols-3 gap-4 text-sm">
                             <div>
-                              <span className="font-medium text-brand-600">Unit Price:</span>
-                              <div>${(component.totalCost / component.quantity).toLocaleString()}</div>
+                              <span className="font-medium text-brand-600">
+                                Unit Price:
+                              </span>
+                              <div>
+                                $
+                                {(
+                                  component.totalCost / component.quantity
+                                ).toLocaleString()}
+                              </div>
                             </div>
                             <div>
-                              <span className="font-medium text-brand-600">Quantity:</span>
-                              <div>{component.quantity} {component.unit}(s)</div>
+                              <span className="font-medium text-brand-600">
+                                Quantity:
+                              </span>
+                              <div>
+                                {component.quantity} {component.unit}(s)
+                              </div>
                             </div>
                             <div>
-                              <span className="font-medium text-brand-600">Unit Type:</span>
+                              <span className="font-medium text-brand-600">
+                                Unit Type:
+                              </span>
                               <div className="capitalize">{component.unit}</div>
                             </div>
                           </div>
@@ -492,23 +569,29 @@ export default function EstimationTool() {
                       <span>Cost Distribution Over Time</span>
                     </CardTitle>
                     <CardDescription>
-                      Monthly cost breakdown for the {parameters.projectDuration}-month project duration
+                      Monthly cost breakdown for the{" "}
+                      {parameters.projectDuration}-month project duration
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
                       <div className="grid grid-cols-2 gap-6">
                         <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                          <h4 className="font-semibold text-green-900 mb-2">One-time Costs</h4>
+                          <h4 className="font-semibold text-green-900 mb-2">
+                            One-time Costs
+                          </h4>
                           <div className="text-2xl font-bold text-green-700">
-                            ${costComponents
-                              .filter(c => c.unit === "one-time")
+                            $
+                            {costComponents
+                              .filter((c) => c.unit === "one-time")
                               .reduce((sum, c) => sum + c.totalCost, 0)
                               .toLocaleString()}
                           </div>
                         </div>
                         <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                          <h4 className="font-semibold text-blue-900 mb-2">Monthly Recurring</h4>
+                          <h4 className="font-semibold text-blue-900 mb-2">
+                            Monthly Recurring
+                          </h4>
                           <div className="text-2xl font-bold text-blue-700">
                             ${monthlyRecurringCost.toLocaleString()}
                           </div>
@@ -516,22 +599,33 @@ export default function EstimationTool() {
                       </div>
 
                       <div className="space-y-3">
-                        {Array.from({ length: parameters.projectDuration }, (_, i) => {
-                          const month = i + 1;
-                          const monthlyTotal = monthlyRecurringCost + 
-                            (month === 1 ? costComponents
-                              .filter(c => c.unit === "one-time")
-                              .reduce((sum, c) => sum + c.totalCost, 0) : 0);
-                          
-                          return (
-                            <div key={month} className="flex items-center justify-between p-3 bg-white rounded border">
-                              <span className="font-medium">Month {month}</span>
-                              <span className="text-lg font-bold text-brand-900">
-                                ${monthlyTotal.toLocaleString()}
-                              </span>
-                            </div>
-                          );
-                        })}
+                        {Array.from(
+                          { length: parameters.projectDuration },
+                          (_, i) => {
+                            const month = i + 1;
+                            const monthlyTotal =
+                              monthlyRecurringCost +
+                              (month === 1
+                                ? costComponents
+                                    .filter((c) => c.unit === "one-time")
+                                    .reduce((sum, c) => sum + c.totalCost, 0)
+                                : 0);
+
+                            return (
+                              <div
+                                key={month}
+                                className="flex items-center justify-between p-3 bg-white rounded border"
+                              >
+                                <span className="font-medium">
+                                  Month {month}
+                                </span>
+                                <span className="text-lg font-bold text-brand-900">
+                                  ${monthlyTotal.toLocaleString()}
+                                </span>
+                              </div>
+                            );
+                          },
+                        )}
                       </div>
                     </div>
                   </CardContent>

@@ -44,7 +44,8 @@ const complianceItems: ComplianceItem[] = [
   {
     id: "1",
     title: "SOC 2 Type II Audit Preparation",
-    description: "Prepare for SOC 2 Type II audit including security controls documentation",
+    description:
+      "Prepare for SOC 2 Type II audit including security controls documentation",
     category: "soc2",
     priority: "high",
     status: "in-progress",
@@ -55,7 +56,8 @@ const complianceItems: ComplianceItem[] = [
   {
     id: "2",
     title: "GDPR Data Processing Agreement",
-    description: "Establish data processing agreements with all third-party vendors",
+    description:
+      "Establish data processing agreements with all third-party vendors",
     category: "gdpr",
     priority: "high",
     status: "pending",
@@ -66,7 +68,8 @@ const complianceItems: ComplianceItem[] = [
   {
     id: "3",
     title: "HIPAA Risk Assessment",
-    description: "Conduct comprehensive HIPAA risk assessment for healthcare data handling",
+    description:
+      "Conduct comprehensive HIPAA risk assessment for healthcare data handling",
     category: "hipaa",
     priority: "high",
     status: "completed",
@@ -77,7 +80,8 @@ const complianceItems: ComplianceItem[] = [
   {
     id: "4",
     title: "Multi-factor Authentication Implementation",
-    description: "Implement MFA for all user accounts accessing sensitive systems",
+    description:
+      "Implement MFA for all user accounts accessing sensitive systems",
     category: "general",
     priority: "high",
     status: "completed",
@@ -88,7 +92,8 @@ const complianceItems: ComplianceItem[] = [
   {
     id: "5",
     title: "Data Encryption at Rest",
-    description: "Ensure all sensitive data is encrypted when stored in databases and file systems",
+    description:
+      "Ensure all sensitive data is encrypted when stored in databases and file systems",
     category: "general",
     priority: "high",
     status: "in-progress",
@@ -99,7 +104,8 @@ const complianceItems: ComplianceItem[] = [
   {
     id: "6",
     title: "Employee Privacy Training",
-    description: "Conduct GDPR privacy training for all employees handling personal data",
+    description:
+      "Conduct GDPR privacy training for all employees handling personal data",
     category: "gdpr",
     priority: "medium",
     status: "pending",
@@ -110,7 +116,8 @@ const complianceItems: ComplianceItem[] = [
   {
     id: "7",
     title: "Audit Logging Implementation",
-    description: "Implement comprehensive audit logging for all system access and data modifications",
+    description:
+      "Implement comprehensive audit logging for all system access and data modifications",
     category: "soc2",
     priority: "medium",
     status: "in-progress",
@@ -121,7 +128,8 @@ const complianceItems: ComplianceItem[] = [
   {
     id: "8",
     title: "Business Associate Agreements",
-    description: "Execute Business Associate Agreements with all HIPAA-covered entities",
+    description:
+      "Execute Business Associate Agreements with all HIPAA-covered entities",
     category: "hipaa",
     priority: "medium",
     status: "pending",
@@ -133,9 +141,9 @@ const complianceItems: ComplianceItem[] = [
 
 export default function ComplianceChecklist() {
   const [searchParams] = useSearchParams();
-  const fileUrl = searchParams.get('fileUrl');
-  const fileName = searchParams.get('fileName') || 'Uploaded Document';
-  const fileId = searchParams.get('fileId') || 'uploaded-file';
+  const fileUrl = searchParams.get("fileUrl");
+  const fileName = searchParams.get("fileName") || "Uploaded Document";
+  const fileId = searchParams.get("fileId") || "uploaded-file";
 
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -150,9 +158,10 @@ export default function ComplianceChecklist() {
     setCheckedItems(newCheckedItems);
   };
 
-  const filteredItems = selectedCategory === "all" 
-    ? complianceItems 
-    : complianceItems.filter(item => item.category === selectedCategory);
+  const filteredItems =
+    selectedCategory === "all"
+      ? complianceItems
+      : complianceItems.filter((item) => item.category === selectedCategory);
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -210,12 +219,16 @@ export default function ComplianceChecklist() {
     }
   };
 
-  const completedCount = complianceItems.filter(item => item.status === "completed").length;
+  const completedCount = complianceItems.filter(
+    (item) => item.status === "completed",
+  ).length;
   const totalCount = complianceItems.length;
   const completionPercentage = Math.round((completedCount / totalCount) * 100);
 
   const checkedCount = checkedItems.size;
-  const checklistProgress = Math.round((checkedCount / filteredItems.length) * 100);
+  const checklistProgress = Math.round(
+    (checkedCount / filteredItems.length) * 100,
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-100">
@@ -225,14 +238,18 @@ export default function ComplianceChecklist() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" asChild>
-                <Link to={`/results?fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}>
+                <Link
+                  to={`/results?fileUrl=${encodeURIComponent(fileUrl || "")}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}
+                >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Results
                 </Link>
               </Button>
               <Separator orientation="vertical" className="h-6" />
               <div>
-                <h1 className="text-xl font-bold text-brand-900">Compliance Checklist</h1>
+                <h1 className="text-xl font-bold text-brand-900">
+                  Compliance Checklist
+                </h1>
                 <p className="text-sm text-brand-600">
                   Generated from {fileName}
                 </p>
@@ -265,16 +282,24 @@ export default function ComplianceChecklist() {
               <CardContent className="space-y-4">
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium">Overall Progress</span>
-                    <span className="text-sm font-bold">{completionPercentage}%</span>
+                    <span className="text-sm font-medium">
+                      Overall Progress
+                    </span>
+                    <span className="text-sm font-bold">
+                      {completionPercentage}%
+                    </span>
                   </div>
                   <Progress value={completionPercentage} className="w-full" />
                 </div>
-                
+
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium">Checklist Progress</span>
-                    <span className="text-sm font-bold">{checklistProgress}%</span>
+                    <span className="text-sm font-medium">
+                      Checklist Progress
+                    </span>
+                    <span className="text-sm font-bold">
+                      {checklistProgress}%
+                    </span>
                   </div>
                   <Progress value={checklistProgress} className="w-full" />
                 </div>
@@ -283,18 +308,28 @@ export default function ComplianceChecklist() {
 
                 <div className="grid grid-cols-1 gap-3">
                   <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
-                    <div className="text-2xl font-bold text-green-600">{completedCount}</div>
+                    <div className="text-2xl font-bold text-green-600">
+                      {completedCount}
+                    </div>
                     <div className="text-sm text-green-700">Completed</div>
                   </div>
                   <div className="text-center p-3 bg-yellow-50 rounded-lg border border-yellow-200">
                     <div className="text-2xl font-bold text-yellow-600">
-                      {complianceItems.filter(item => item.status === "in-progress").length}
+                      {
+                        complianceItems.filter(
+                          (item) => item.status === "in-progress",
+                        ).length
+                      }
                     </div>
                     <div className="text-sm text-yellow-700">In Progress</div>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-200">
                     <div className="text-2xl font-bold text-gray-600">
-                      {complianceItems.filter(item => item.status === "pending").length}
+                      {
+                        complianceItems.filter(
+                          (item) => item.status === "pending",
+                        ).length
+                      }
                     </div>
                     <div className="text-sm text-gray-700">Pending</div>
                   </div>
@@ -313,7 +348,11 @@ export default function ComplianceChecklist() {
                     <span className="text-sm">SOC 2 Type II</span>
                   </div>
                   <Badge variant="outline" className="text-xs">
-                    {complianceItems.filter(item => item.category === "soc2").length} items
+                    {
+                      complianceItems.filter((item) => item.category === "soc2")
+                        .length
+                    }{" "}
+                    items
                   </Badge>
                 </div>
                 <div className="flex justify-between items-center">
@@ -322,7 +361,11 @@ export default function ComplianceChecklist() {
                     <span className="text-sm">GDPR</span>
                   </div>
                   <Badge variant="outline" className="text-xs">
-                    {complianceItems.filter(item => item.category === "gdpr").length} items
+                    {
+                      complianceItems.filter((item) => item.category === "gdpr")
+                        .length
+                    }{" "}
+                    items
                   </Badge>
                 </div>
                 <div className="flex justify-between items-center">
@@ -331,7 +374,12 @@ export default function ComplianceChecklist() {
                     <span className="text-sm">HIPAA</span>
                   </div>
                   <Badge variant="outline" className="text-xs">
-                    {complianceItems.filter(item => item.category === "hipaa").length} items
+                    {
+                      complianceItems.filter(
+                        (item) => item.category === "hipaa",
+                      ).length
+                    }{" "}
+                    items
                   </Badge>
                 </div>
                 <div className="flex justify-between items-center">
@@ -340,7 +388,12 @@ export default function ComplianceChecklist() {
                     <span className="text-sm">General Security</span>
                   </div>
                   <Badge variant="outline" className="text-xs">
-                    {complianceItems.filter(item => item.category === "general").length} items
+                    {
+                      complianceItems.filter(
+                        (item) => item.category === "general",
+                      ).length
+                    }{" "}
+                    items
                   </Badge>
                 </div>
               </CardContent>
@@ -374,8 +427,12 @@ export default function ComplianceChecklist() {
                             <div className="flex-1 space-y-3">
                               <div className="flex items-start justify-between">
                                 <div className="space-y-2">
-                                  <h3 className="font-semibold text-brand-900">{item.title}</h3>
-                                  <p className="text-sm text-brand-700">{item.description}</p>
+                                  <h3 className="font-semibold text-brand-900">
+                                    {item.title}
+                                  </h3>
+                                  <p className="text-sm text-brand-700">
+                                    {item.description}
+                                  </p>
                                 </div>
                                 <div className="flex items-center space-x-2">
                                   {getStatusIcon(item.status)}
@@ -384,9 +441,13 @@ export default function ComplianceChecklist() {
                                     className={getCategoryColor(item.category)}
                                   >
                                     {getCategoryIcon(item.category)}
-                                    <span className="ml-1 uppercase text-xs">{item.category}</span>
+                                    <span className="ml-1 uppercase text-xs">
+                                      {item.category}
+                                    </span>
                                   </Badge>
-                                  <Badge className={getPriorityColor(item.priority)}>
+                                  <Badge
+                                    className={getPriorityColor(item.priority)}
+                                  >
                                     {item.priority} priority
                                   </Badge>
                                 </div>
@@ -394,21 +455,37 @@ export default function ComplianceChecklist() {
 
                               <div className="grid grid-cols-2 gap-4 text-sm">
                                 <div>
-                                  <span className="font-medium text-brand-600">Responsible:</span>
-                                  <span className="ml-2">{item.responsible}</span>
+                                  <span className="font-medium text-brand-600">
+                                    Responsible:
+                                  </span>
+                                  <span className="ml-2">
+                                    {item.responsible}
+                                  </span>
                                 </div>
                                 <div>
-                                  <span className="font-medium text-brand-600">Due Date:</span>
-                                  <span className="ml-2">{new Date(item.dueDate).toLocaleDateString()}</span>
+                                  <span className="font-medium text-brand-600">
+                                    Due Date:
+                                  </span>
+                                  <span className="ml-2">
+                                    {new Date(
+                                      item.dueDate,
+                                    ).toLocaleDateString()}
+                                  </span>
                                 </div>
                               </div>
 
                               {item.evidence.length > 0 && (
                                 <div>
-                                  <span className="font-medium text-brand-600 text-sm">Evidence:</span>
+                                  <span className="font-medium text-brand-600 text-sm">
+                                    Evidence:
+                                  </span>
                                   <div className="flex flex-wrap gap-2 mt-1">
                                     {item.evidence.map((evidence, index) => (
-                                      <Badge key={index} variant="secondary" className="text-xs">
+                                      <Badge
+                                        key={index}
+                                        variant="secondary"
+                                        className="text-xs"
+                                      >
                                         <Database className="h-3 w-3 mr-1" />
                                         {evidence}
                                       </Badge>
