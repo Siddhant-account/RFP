@@ -9,6 +9,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Results from "./pages/Results";
 import DocumentViewer from "./pages/DocumentViewer";
+import CreateService from "./pages/CreateService";
+import ComplianceChecklist from "./pages/ComplianceChecklist";
+import EstimationTool from "./pages/EstimationTool";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +26,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/results" element={<Results />} />
           <Route path="/document" element={<DocumentViewer />} />
+          <Route path="/create-service" element={<CreateService />} />
+          <Route path="/compliance-checklist" element={<ComplianceChecklist />} />
+          <Route path="/estimation-tool" element={<EstimationTool />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
