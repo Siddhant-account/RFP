@@ -58,12 +58,15 @@ export default function Index() {
   const handleFiles = (files: FileList) => {
     Array.from(files).forEach((file) => {
       // Accept all file types
+      const fileUrl = URL.createObjectURL(file);
       const newFile: UploadedFile = {
         id: Date.now().toString(),
         name: file.name,
         size: file.size,
         progress: 0,
         status: "uploading",
+        file: file,
+        fileUrl: fileUrl,
       };
 
       setUploadedFiles((prev) => [...prev, newFile]);

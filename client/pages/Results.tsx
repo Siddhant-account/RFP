@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -279,7 +280,7 @@ export default function Results() {
                             </div>
                             {point.pageReference && (
                               <Link
-                                to={`/document?page=${point.pageReference}&docId=${mockAnalysis.documentId}`}
+                                to={`/document?page=${point.pageReference}&docId=${fileId}&fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}`}
                                 className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-brand-100 cursor-pointer"
                               >
                                 Page {point.pageReference}
@@ -289,7 +290,7 @@ export default function Results() {
                           <h4 className="font-semibold text-brand-900 mb-2">
                             {point.pageReference ? (
                               <Link
-                                to={`/document?page=${point.pageReference}&docId=${mockAnalysis.documentId}`}
+                                to={`/document?page=${point.pageReference}&docId=${fileId}&fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}`}
                                 className="hover:text-brand-600 hover:underline cursor-pointer transition-colors"
                               >
                                 {point.title}
