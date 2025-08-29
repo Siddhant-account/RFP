@@ -426,32 +426,6 @@ export default function Results() {
               </CardContent>
             </Card>
 
-            {/* Quick Actions */}
-            <Card className="border-brand-200">
-              <CardHeader>
-                <CardTitle className="text-lg">Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button className="w-full justify-start" variant="outline" asChild>
-                  <Link to={`/create-service?fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}>
-                    <Calendar className="h-4 w-4 mr-2" />
-                    Create Project Timeline
-                  </Link>
-                </Button>
-                <Button className="w-full justify-start" variant="outline" asChild>
-                  <Link to={`/compliance-checklist?fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}>
-                    <CheckCircle2 className="h-4 w-4 mr-2" />
-                    Generate Compliance Checklist
-                  </Link>
-                </Button>
-                <Button className="w-full justify-start" variant="outline" asChild>
-                  <Link to={`/estimation-tool?fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}&fileId=${fileId}`}>
-                    <DollarSign className="h-4 w-4 mr-2" />
-                    Cost Estimation Tool
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </main>
