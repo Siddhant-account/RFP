@@ -144,6 +144,11 @@ const getImportanceColor = (importance: string) => {
 };
 
 export default function Results() {
+  const [searchParams] = useSearchParams();
+  const fileUrl = searchParams.get('fileUrl');
+  const fileName = searchParams.get('fileName') || 'Uploaded Document';
+  const fileId = searchParams.get('fileId') || 'uploaded-file';
+
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const filteredKeyPoints =
@@ -176,7 +181,7 @@ export default function Results() {
                   RFP Analysis Results
                 </h1>
                 <p className="text-sm text-brand-600">
-                  Cloud Infrastructure RFP • 45 pages
+                  {fileName} • 45 pages
                 </p>
               </div>
             </div>
