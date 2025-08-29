@@ -197,7 +197,7 @@ export default function DocumentViewer() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" asChild>
-                <Link to="/results">
+                <Link to={`/results?fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}&fileId=${documentId}`}>
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Analysis
                 </Link>
@@ -382,7 +382,7 @@ export default function DocumentViewer() {
                   </Button>
                 )}
                 <Button className="w-full justify-start" variant="outline" asChild>
-                  <Link to="/results">
+                  <Link to={`/results?fileUrl=${encodeURIComponent(fileUrl || '')}&fileName=${encodeURIComponent(fileName)}&fileId=${documentId}`}>
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Back to Analysis
                   </Link>
